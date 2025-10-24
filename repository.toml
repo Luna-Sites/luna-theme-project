@@ -1,0 +1,37 @@
+[repository]
+name = "luna-theme"
+managed_by_uv = false
+changelog = "CHANGELOG.md"
+version = "version.txt"
+compose = "docker-compose.yml"
+
+[repository.towncrier]
+section = "Project"
+settings = "towncrier.toml"
+
+[backend]
+path = "backend"
+
+[backend.package]
+name = "luna.theme"
+path = "backend"
+changelog = "backend/CHANGELOG.md"
+towncrier_settings = "backend/pyproject.toml"
+base_package = "Products.CMFPlone"
+publish = false
+
+[frontend]
+path = "frontend"
+
+[frontend.package]
+name = "luna-theme"
+path = "frontend/packages/luna-theme"
+changelog = "frontend/packages/luna-theme/CHANGELOG.md"
+towncrier_settings = "frontend/packages/luna-theme/towncrier.toml"
+base_package = "@plone/volto"
+publish = false
+
+[cookieplone]
+template = "project"
+template_version = "888ff6948a43d8b962f4900ba1770f876e2f0243"
+generated_date = "2025-10-24 17:49:10"
