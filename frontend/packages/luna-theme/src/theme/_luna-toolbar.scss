@@ -126,7 +126,11 @@ body.has-toolbar-luna {
   // Hover state
   &:hover {
     background-color: $toolbar-hover-bg;
-    color: $toolbar-icon-color;
+    color: $luna-purple;
+
+    svg {
+      stroke: $luna-purple;
+    }
   }
 
   // Focus state
