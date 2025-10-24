@@ -3,7 +3,7 @@
  * Clean, modern toolbar design with white background
  */
 
-@import 'variables';
+@use 'variables' as *;
 
 // Body adjustments for Luna toolbar
 body.has-toolbar-luna {
@@ -55,14 +55,14 @@ body.has-toolbar-luna {
   border-radius: $border-radius-lg;
 }
 
-.luna-toolbar-undo-redo {
-  display: flex;
-  align-items: center;
-  gap: $toolbar-gap;
-  margin-left: $spacing-md;
-  flex-shrink: 0;
-  // White background (no gradient)
-}
+// .luna-toolbar-undo-redo {
+//   display: flex;
+//   align-items: center;
+//   gap: $toolbar-gap;
+//   margin-left: $spacing-md;
+//   flex-shrink: 0;
+//   // White background (no gradient)
+// }
 
 .luna-toolbar-right {
   display: flex;
@@ -119,22 +119,43 @@ body.has-toolbar-luna {
 }
 
 .luna-logo-icon {
-  color: $luna-purple;
-
   svg {
-    stroke: $luna-purple;
-    stroke-width: 1.8;
     fill: none !important;
   }
 }
 
-// Logo icon color for dark theme (white sun)
-body.has-toolbar-luna.theme-dark {
-  .luna-logo-icon {
-    color: $white;
+// Purple moon for light theme
+body.has-toolbar-luna .luna-logo-moon,
+.luna-logo-moon {
+  svg,
+  svg.icon {
+    stroke: $luna-purple !important;
+    stroke-width: 1.8 !important;
+    color: $luna-purple !important;
 
-    svg {
-      stroke: $white;
+    path,
+    circle,
+    line {
+      stroke: $luna-purple !important;
+      color: $luna-purple !important;
+    }
+  }
+}
+
+// White sun for dark theme
+body.has-toolbar-luna.theme-dark .luna-logo-sun,
+.luna-logo-sun {
+  svg,
+  svg.icon {
+    stroke: white !important;
+    stroke-width: 2.5 !important;
+    color: white !important;
+
+    path,
+    circle,
+    line {
+      stroke: white !important;
+      color: white !important;
     }
   }
 }
@@ -306,7 +327,8 @@ body.has-toolbar-luna.theme-dark {
   }
 
   .luna-toolbar-center {
-    background: linear-gradient(to right, $gray-900, $luna-purple);
+    // Gradient from dark gray to semi-transparent purple (30% opacity)
+    background: linear-gradient(to right, $gray-900, rgba(124, 58, 237, 0.3));
   }
 
   .luna-toolbar-button {

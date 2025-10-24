@@ -21,7 +21,11 @@ const Logo: React.FC<LogoProps> = ({ onToggleTheme, isDarkTheme = false }) => {
         <Icon
           name={isDarkTheme ? sunSVG : moonSVG}
           size="32px"
-          className="luna-logo-icon"
+          className={isDarkTheme ? "luna-logo-icon luna-logo-sun" : "luna-logo-icon luna-logo-moon"}
+          style={{
+            stroke: isDarkTheme ? 'white' : '#7c3aed',
+            color: isDarkTheme ? 'white' : '#7c3aed'
+          }}
         />
       </div>
     </div>
