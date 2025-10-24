@@ -1,5 +1,5 @@
 /**
- * Toolbar component - Horizontal Layout Customization for Luna Theme
+ * Toolbar component - Luna Theme Horizontal Design
  * @module components/manage/Toolbar/Toolbar
  */
 
@@ -33,15 +33,18 @@ import { getBaseUrl } from '@plone/volto/helpers/Url/Url';
 import { getCookieOptions } from '@plone/volto/helpers/Cookies/cookies';
 import { hasApiExpander } from '@plone/volto/helpers/Utils/Utils';
 import { Pluggable } from '@plone/volto/components/manage/Pluggable';
+import Logo from 'luna-theme/components/Logo';
 
-import penSVG from '@plone/volto/icons/pen.svg';
+// Luna Theme custom icons
+import editSVG from 'luna-theme/icons/edit.svg';
+import folderSVG from 'luna-theme/icons/folder.svg';
+import addSVG from 'luna-theme/icons/add-document.svg';
+import moreSVG from 'luna-theme/icons/more.svg';
+import undoSVG from 'luna-theme/icons/undo.svg';
+import redoSVG from 'luna-theme/icons/redo.svg';
+import userSVG from 'luna-theme/icons/user.svg';
 import unlockSVG from '@plone/volto/icons/unlock.svg';
-import folderSVG from '@plone/volto/icons/folder.svg';
-import addSVG from '@plone/volto/icons/add-document.svg';
-import moreSVG from '@plone/volto/icons/more.svg';
-import userSVG from '@plone/volto/icons/user.svg';
 import backSVG from '@plone/volto/icons/back.svg';
-import clearSVG from '@plone/volto/icons/clear.svg';
 
 const messages = defineMessages({
   edit: {
@@ -60,41 +63,21 @@ const messages = defineMessages({
     id: 'More',
     defaultMessage: 'More',
   },
+  undo: {
+    id: 'Undo',
+    defaultMessage: 'Undo',
+  },
+  redo: {
+    id: 'Redo',
+    defaultMessage: 'Redo',
+  },
+  themeToggle: {
+    id: 'Toggle theme',
+    defaultMessage: 'Toggle theme',
+  },
   personalTools: {
     id: 'Personal tools',
     defaultMessage: 'Personal tools',
-  },
-  shrinkToolbar: {
-    id: 'Shrink toolbar',
-    defaultMessage: 'Shrink toolbar',
-  },
-  personalInformation: {
-    id: 'Personal Information',
-    defaultMessage: 'Personal Information',
-  },
-  personalPreferences: {
-    id: 'Personal Preferences',
-    defaultMessage: 'Personal Preferences',
-  },
-  collection: {
-    id: 'Collection',
-    defaultMessage: 'Collection',
-  },
-  file: {
-    id: 'File',
-    defaultMessage: 'File',
-  },
-  link: {
-    id: 'Link',
-    defaultMessage: 'Link',
-  },
-  newsItem: {
-    id: 'News Item',
-    defaultMessage: 'News Item',
-  },
-  page: {
-    id: 'Page',
-    defaultMessage: 'Page',
   },
   back: {
     id: 'Back',
@@ -125,16 +108,11 @@ let toolbarComponents = {
 };
 
 /**
- * Toolbar container class - Horizontal Layout.
+ * Luna Theme Toolbar - Horizontal Layout
  * @class Toolbar
  * @extends Component
  */
 class Toolbar extends Component {
-  /**
-   * Property types.
-   * @property {Object} propTypes Property types.
-   * @static
-   */
   static propTypes = {
     actions: PropTypes.shape({
       object: PropTypes.arrayOf(PropTypes.object),
@@ -160,15 +138,10 @@ class Toolbar extends Component {
     listActions: PropTypes.func.isRequired,
     unlockContent: PropTypes.func,
     unlockRequest: PropTypes.objectOf(PropTypes.any),
-    inner: PropTypes.element.isRequired,
+    inner: PropTypes.element,
     hideDefaultViewButtons: PropTypes.bool,
   };
 
-  /**
-   * Default properties.
-   * @property {Object} defaultProps Default properties.
-   * @static
-   */
   static defaultProps = {
     actions: null,
     token: null,
@@ -186,26 +159,20 @@ class Toolbar extends Component {
     super(props);
     const { cookies } = props;
     this.state = {
-      expanded: cookies.get('toolbar_expanded') !== 'false',
+      expanded: true, // Always expanded for horizontal layout
       showMenu: false,
       menuStyle: {},
       menuComponents: [],
       loadedComponents: [],
       hideToolbarBody: false,
+      isDarkTheme: false, // Track theme state
     };
   }
 
-  /**
-   * Component will mount
-   * @method componentDidMount
-   * @returns {undefined}
-   */
   componentDidMount() {
-    // Do not trigger the actions action if the expander is present
     if (!hasApiExpander('actions', getBaseUrl(this.props.pathname))) {
       this.props.listActions(getBaseUrl(this.props.pathname));
     }
-    // Do not trigger the types action if the expander is present
     if (!hasApiExpander('types', getBaseUrl(this.props.pathname))) {
       this.props.getTypes(getBaseUrl(this.props.pathname));
     }
@@ -219,47 +186,24 @@ class Toolbar extends Component {
     document.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
-  /**
-   * Component will receive props
-   * @method componentWillReceiveProps
-   * @param {Object} nextProps Next properties
-   * @returns {undefined}
-   */
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.pathname !== this.props.pathname) {
-      // Do not trigger the actions action if the expander is present
       if (!hasApiExpander('actions', getBaseUrl(nextProps.pathname))) {
         this.props.listActions(getBaseUrl(nextProps.pathname));
       }
-      // Do not trigger the types action if the expander is present
       if (!hasApiExpander('types', getBaseUrl(nextProps.pathname))) {
         this.props.getTypes(getBaseUrl(nextProps.pathname));
       }
     }
 
-    // Unlock
     if (this.props.unlockRequest.loading && nextProps.unlockRequest.loaded) {
       this.props.listActions(getBaseUrl(nextProps.pathname));
     }
   }
 
-  /**
-   * Component will receive props
-   * @method componentWillUnmount
-   * @returns {undefined}
-   */
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside, false);
   }
-
-  handleShrink = () => {
-    const { cookies } = this.props;
-    cookies.set('toolbar_expanded', !this.state.expanded, getCookieOptions());
-    this.setState(
-      (state) => ({ expanded: !state.expanded }),
-      () => this.props.setExpandedToolbar(this.state.expanded),
-    );
-  };
 
   closeMenu = () => {
     this.setState(() => ({ showMenu: false, loadedComponents: [] }));
@@ -281,7 +225,7 @@ class Toolbar extends Component {
       hideToolbarBody:
         toolbarComponents[
           state.loadedComponents[state.loadedComponents.length - 2]
-        ].hideToolbarBody || false,
+        ]?.hideToolbarBody || false,
     }));
   };
 
@@ -299,13 +243,27 @@ class Toolbar extends Component {
       this.closeMenu();
       return;
     }
-    // For horizontal layout, menus appear below the toolbar
     this.setState((state) => ({
       showMenu: !state.showMenu,
       menuStyle: { top: '100%', left: 0, right: 0 },
     }));
     this.toggleButtonPressed(e);
     this.loadComponent(selector);
+  };
+
+  toggleTheme = () => {
+    this.setState((state) => ({ isDarkTheme: !state.isDarkTheme }));
+    // Theme toggle logic will be implemented later
+  };
+
+  handleUndo = () => {
+    // Undo logic will be implemented later
+    console.log('Undo clicked');
+  };
+
+  handleRedo = () => {
+    // Redo logic will be implemented later
+    console.log('Redo clicked');
   };
 
   findAncestor = (el, sel) => {
@@ -320,8 +278,6 @@ class Toolbar extends Component {
     const target = e.target;
     if (this.pusher && doesNodeContainClick(this.pusher, e)) return;
 
-    // if the click is on the same button, do not close the menu as it
-    // may be handled by the toggleMenu action
     const button =
       doesNodeContainClick(this.toolbarRef.current, e) &&
       this.findAncestor(target, 'button');
@@ -334,11 +290,6 @@ class Toolbar extends Component {
     this.props.unlockContent(getBaseUrl(this.props.pathname), true);
   };
 
-  /**
-   * Render method.
-   * @method render
-   * @returns {string} Markup for the component.
-   */
   render() {
     const path = getBaseUrl(this.props.pathname);
     const lock = this.props.content?.lock;
@@ -349,181 +300,191 @@ class Toolbar extends Component {
     const folderContentsAction = find(this.props.actions.object, {
       id: 'folderContents',
     });
-    const { expanded } = this.state;
 
     return (
       this.props.token && (
         <>
-          <BodyClass className="has-toolbar-horizontal" />
-          <div
-            className={cx('toolbar-horizontal', {
-              expanded,
-              collapsed: !expanded,
-            })}
-            ref={this.toolbarRef}
-          >
-            <div className="toolbar-body-horizontal">
-              <div className="toolbar-actions-horizontal">
-                {this.props.hideDefaultViewButtons && this.props.inner && (
-                  <>{this.props.inner}</>
-                )}
-                {!this.props.hideDefaultViewButtons && (
-                  <>
-                    {unlockAction && (
-                      <button
+          <BodyClass className="has-toolbar-luna" />
+          <div className="luna-toolbar" ref={this.toolbarRef}>
+            {/* Left Section: Logo */}
+            <div className="luna-toolbar-left">
+              <Logo pathname={this.props.pathname} onToggleTheme={this.toggleTheme} />
+            </div>
+
+            {/* Center Section: Action Buttons */}
+            <div className="luna-toolbar-center">
+              {!this.props.hideDefaultViewButtons && (
+                <>
+                  {unlockAction && (
+                    <button
+                      aria-label={this.props.intl.formatMessage(
+                        messages.unlock,
+                      )}
+                      className="luna-toolbar-button"
+                      onClick={(e) => this.unlock(e)}
+                      tabIndex={0}
+                    >
+                      <Icon
+                        name={unlockSVG}
+                        size="24px"
+                        title={this.props.intl.formatMessage(messages.unlock)}
+                      />
+                    </button>
+                  )}
+
+                  {editAction && (
+                    <Link
+                      aria-label={this.props.intl.formatMessage(
+                        messages.edit,
+                      )}
+                      className="luna-toolbar-button"
+                      to={`${path}/edit`}
+                    >
+                      <Icon
+                        name={editSVG}
+                        size="24px"
+                        title={this.props.intl.formatMessage(messages.edit)}
+                      />
+                    </Link>
+                  )}
+
+                  {this.props.content &&
+                    this.props.content.is_folderish &&
+                    folderContentsAction &&
+                    !this.props.pathname.endsWith('/contents') && (
+                      <Link
                         aria-label={this.props.intl.formatMessage(
-                          messages.unlock,
+                          messages.contents,
                         )}
-                        className="unlock"
-                        onClick={(e) => this.unlock(e)}
-                        tabIndex={0}
+                        className="luna-toolbar-button"
+                        to={`${path}/contents`}
                       >
                         <Icon
-                          name={unlockSVG}
-                          size="30px"
-                          className="unlock"
-                          title={this.props.intl.formatMessage(messages.unlock)}
+                          name={folderSVG}
+                          size="24px"
+                          title={this.props.intl.formatMessage(
+                            messages.contents,
+                          )}
+                        />
+                      </Link>
+                    )}
+
+                  {this.props.content &&
+                    this.props.content.is_folderish &&
+                    folderContentsAction &&
+                    this.props.pathname.endsWith('/contents') && (
+                      <Link
+                        to={`${path}`}
+                        aria-label={this.props.intl.formatMessage(
+                          messages.back,
+                        )}
+                        className="luna-toolbar-button"
+                      >
+                        <Icon
+                          name={backSVG}
+                          size="24px"
+                          title={this.props.intl.formatMessage(messages.back)}
+                        />
+                      </Link>
+                    )}
+
+                  {this.props.content &&
+                    this.props.content.is_folderish &&
+                    (this.props.types.length > 0 ||
+                      this.props.content['@components']?.translations) && (
+                      <button
+                        className="luna-toolbar-button"
+                        aria-label={this.props.intl.formatMessage(
+                          messages.add,
+                        )}
+                        onClick={(e) => this.toggleMenu(e, 'types')}
+                        tabIndex={0}
+                        id="toolbar-add"
+                      >
+                        <Icon
+                          name={addSVG}
+                          size="24px"
+                          title={this.props.intl.formatMessage(messages.add)}
                         />
                       </button>
                     )}
 
-                    {editAction && (
-                      <Link
-                        aria-label={this.props.intl.formatMessage(
-                          messages.edit,
-                        )}
-                        className="edit"
-                        to={`${path}/edit`}
-                      >
-                        <Icon
-                          name={penSVG}
-                          size="30px"
-                          className="circled"
-                          title={this.props.intl.formatMessage(messages.edit)}
-                        />
-                      </Link>
-                    )}
-                    {this.props.content &&
-                      this.props.content.is_folderish &&
-                      folderContentsAction &&
-                      !this.props.pathname.endsWith('/contents') && (
-                        <Link
-                          aria-label={this.props.intl.formatMessage(
-                            messages.contents,
-                          )}
-                          to={`${path}/contents`}
-                        >
-                          <Icon
-                            name={folderSVG}
-                            size="30px"
-                            title={this.props.intl.formatMessage(
-                              messages.contents,
-                            )}
-                          />
-                        </Link>
-                      )}
-                    {this.props.content &&
-                      this.props.content.is_folderish &&
-                      folderContentsAction &&
-                      this.props.pathname.endsWith('/contents') && (
-                        <Link
-                          to={`${path}`}
-                          aria-label={this.props.intl.formatMessage(
-                            messages.back,
-                          )}
-                        >
-                          <Icon
-                            name={backSVG}
-                            className="circled"
-                            size="30px"
-                            title={this.props.intl.formatMessage(messages.back)}
-                          />
-                        </Link>
-                      )}
-                    {this.props.content &&
-                      this.props.content.is_folderish &&
-                      (this.props.types.length > 0 ||
-                        this.props.content['@components']?.translations) && (
-                        <button
-                          className="add"
-                          aria-label={this.props.intl.formatMessage(
-                            messages.add,
-                          )}
-                          onClick={(e) => this.toggleMenu(e, 'types')}
-                          tabIndex={0}
-                          id="toolbar-add"
-                        >
-                          <Icon
-                            name={addSVG}
-                            size="30px"
-                            title={this.props.intl.formatMessage(messages.add)}
-                          />
-                        </button>
-                      )}
-                    <button
-                      className="more"
-                      aria-label={this.props.intl.formatMessage(messages.more)}
-                      onClick={(e) => this.toggleMenu(e, 'more')}
-                      tabIndex={0}
-                      id="toolbar-more"
-                    >
-                      <Icon
-                        className="mobile hidden"
-                        name={moreSVG}
-                        size="30px"
-                        title={this.props.intl.formatMessage(messages.more)}
-                      />
-                      {this.state.showMenu ? (
-                        <Icon
-                          className="mobile only"
-                          name={clearSVG}
-                          size="30px"
-                        />
-                      ) : (
-                        <Icon
-                          className="mobile only"
-                          name={moreSVG}
-                          size="30px"
-                        />
-                      )}
-                    </button>
-                  </>
-                )}
-                <Pluggable name="main.toolbar.top" />
-              </div>
-              <div className="toolbar-right-section">
-                <Pluggable
-                  name="main.toolbar.bottom"
-                  params={{ onClickHandler: this.toggleMenu }}
-                />
-                {!this.props.hideDefaultViewButtons && (
                   <button
-                    className="user"
-                    aria-label={this.props.intl.formatMessage(
-                      messages.personalTools,
-                    )}
-                    onClick={(e) => this.toggleMenu(e, 'personalTools')}
+                    className="luna-toolbar-button"
+                    aria-label={this.props.intl.formatMessage(messages.more)}
+                    onClick={(e) => this.toggleMenu(e, 'more')}
                     tabIndex={0}
-                    id="toolbar-personal"
+                    id="toolbar-more"
                   >
                     <Icon
-                      name={userSVG}
-                      size="30px"
-                      title={this.props.intl.formatMessage(
-                        messages.personalTools,
-                      )}
+                      name={moreSVG}
+                      size="24px"
+                      title={this.props.intl.formatMessage(messages.more)}
                     />
                   </button>
-                )}
-              </div>
+                </>
+              )}
+            </div>
+
+            {/* Right Section: Utility Buttons */}
+            <div className="luna-toolbar-right">
+              <button
+                className="luna-toolbar-button"
+                aria-label={this.props.intl.formatMessage(messages.undo)}
+                onClick={this.handleUndo}
+                tabIndex={0}
+              >
+                <Icon
+                  name={undoSVG}
+                  size="24px"
+                  title={this.props.intl.formatMessage(messages.undo)}
+                />
+              </button>
+
+              <button
+                className="luna-toolbar-button"
+                aria-label={this.props.intl.formatMessage(messages.redo)}
+                onClick={this.handleRedo}
+                tabIndex={0}
+              >
+                <Icon
+                  name={redoSVG}
+                  size="24px"
+                  title={this.props.intl.formatMessage(messages.redo)}
+                />
+              </button>
+
+              {!this.props.hideDefaultViewButtons && (
+                <button
+                  className="luna-toolbar-button"
+                  aria-label={this.props.intl.formatMessage(
+                    messages.personalTools,
+                  )}
+                  onClick={(e) => this.toggleMenu(e, 'personalTools')}
+                  tabIndex={0}
+                  id="toolbar-personal"
+                >
+                  <Icon
+                    name={userSVG}
+                    size="24px"
+                    title={this.props.intl.formatMessage(
+                      messages.personalTools,
+                    )}
+                  />
+                </button>
+              )}
+
+              <Pluggable name="main.toolbar.bottom" />
             </div>
           </div>
+
+          {/* Dropdown Menu Content */}
           <div
             style={this.state.menuStyle}
             className={
               this.state.showMenu
-                ? 'toolbar-content-horizontal show'
-                : 'toolbar-content-horizontal'
+                ? 'luna-toolbar-content show'
+                : 'luna-toolbar-content'
             }
             ref={this.toolbarWindow}
           >
@@ -531,7 +492,7 @@ class Toolbar extends Component {
               <BodyClass className="has-toolbar-menu-open" />
             )}
             <div
-              className="pusher-puller-horizontal"
+              className="luna-pusher-puller"
               ref={(node) => (this.pusher = node)}
               style={{
                 transform: this.toolbarWindow.current

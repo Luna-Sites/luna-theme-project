@@ -3,7 +3,10 @@
  * Custom theme styles for luna-theme
  */
 
-// Import horizontal toolbar styles
-@import 'toolbar-horizontal';
+// Import variables
+@import 'variables';
+
+// Import Luna toolbar styles
+@import 'luna-toolbar';
 
 // Additional theme customizations will go here
