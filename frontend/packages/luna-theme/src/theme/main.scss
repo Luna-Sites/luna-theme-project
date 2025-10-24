@@ -4,9 +4,9 @@
  */
 
 // Import variables
-@import 'variables';
+@use 'variables' as *;
 
 // Import Luna toolbar styles
-@import 'luna-toolbar';
+@use 'luna-toolbar';
 
 // Additional theme customizations will go here

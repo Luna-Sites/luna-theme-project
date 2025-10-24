@@ -306,13 +306,14 @@ class Toolbar extends Component {
     return (
       this.props.token && (
         <>
-          <BodyClass className="has-toolbar-luna" />
+          <BodyClass className={cx('has-toolbar-luna', { 'theme-dark': this.state.isDarkTheme })} />
           <div className="luna-toolbar" ref={this.toolbarRef}>
             {/* Left Section: Logo + User Button */}
             <div className="luna-toolbar-left">
               <Logo
                 pathname={this.props.pathname}
                 onToggleTheme={this.toggleTheme}
+                isDarkTheme={this.state.isDarkTheme}
               />
               {!this.props.hideDefaultViewButtons && (
                 <button
