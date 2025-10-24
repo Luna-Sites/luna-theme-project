@@ -456,9 +456,7 @@ class Toolbar extends Component {
               {!this.props.hideDefaultViewButtons && (
                 <button
                   className="luna-toolbar-button"
-                  aria-label={this.props.intl.formatMessage(
-                    messages.personalTools,
-                  )}
+                  aria-label="Account"
                   onClick={(e) => this.toggleMenu(e, 'personalTools')}
                   tabIndex={0}
                   id="toolbar-personal"
@@ -466,9 +464,7 @@ class Toolbar extends Component {
                   <Icon
                     name={userSVG}
                     size="24px"
-                    title={this.props.intl.formatMessage(
-                      messages.personalTools,
-                    )}
+                    title="Account"
                   />
                 </button>
               )}
