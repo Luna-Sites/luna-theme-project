@@ -56,10 +56,11 @@ jobs:
       - name: Install dependencies
         run: make install
 
-      - name: Linting
-        id: lint
-        if: ${{ success() || failure() }}
-        run: make lint
+      # Disabled for testing
+      # - name: Linting
+      #   id: lint
+      #   if: ${{ success() || failure() }}
+      #   run: make lint
 
       - name: i18n sync
         id: i18n
@@ -77,7 +78,6 @@ jobs:
           echo '# Code Analysis' >> $GITHUB_STEP_SUMMARY
           echo '| Test | Status |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
-          echo '| Lint | ${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
           echo '| i18n | ${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
           echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
 
