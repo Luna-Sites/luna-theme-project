@@ -31,7 +31,7 @@ body.has-toolbar-luna {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 $spacing-xl;
+  padding: 0 $spacing-2xl;
   box-shadow: $shadow-md;
   font-family: $font-family-base;
 }
@@ -50,6 +50,9 @@ body.has-toolbar-luna {
   gap: $toolbar-gap;
   flex: 0 0 auto;
   margin-left: $spacing-2xl;
+  background: linear-gradient(to right, $white, $gray-100);
+  padding: $spacing-sm;
+  border-radius: $border-radius-lg;
 }
 
 .luna-toolbar-right {
@@ -248,17 +251,3 @@ body.has-toolbar-luna.theme-dark {
   }
 }
 
-// Subtle visual separator between button groups (optional)
-.luna-toolbar-center::after {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 24px;
-  background-color: $gray-200;
-  margin-left: $spacing-sm;
-}
-
-// Remove separator if no buttons in center section
-.luna-toolbar-center:empty::after {
-  display: none;
-}
