@@ -40,7 +40,7 @@ body.has-toolbar-luna {
 .luna-toolbar-left {
   display: flex;
   align-items: center;
-  gap: $spacing-md;
+  gap: $spacing-lg;
   flex-shrink: 0;
 }
 
@@ -55,12 +55,22 @@ body.has-toolbar-luna {
   border-radius: $border-radius-lg;
 }
 
+.luna-toolbar-undo-redo {
+  display: flex;
+  align-items: center;
+  gap: $toolbar-gap;
+  margin-left: $spacing-md;
+  flex-shrink: 0;
+  // White background (no gradient)
+}
+
 .luna-toolbar-right {
   display: flex;
   align-items: center;
   gap: $toolbar-gap;
   margin-left: auto;
   flex-shrink: 0;
+  // Empty section for sidebar space
 }
 
 // Logo Component Styles
@@ -134,8 +144,8 @@ body.has-toolbar-luna {
     bottom: -35px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: $gray-900;
-    color: $white;
+    background-color: $white;
+    color: $gray-900;
     padding: 6px 12px;
     border-radius: $border-radius-sm;
     font-size: $font-size-sm;
@@ -144,29 +154,11 @@ body.has-toolbar-luna {
     pointer-events: none;
     transition: opacity $transition-fast;
     z-index: 10;
-  }
-
-  // Tooltip arrow
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid $gray-900;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity $transition-fast;
-    z-index: 10;
+    box-shadow: $shadow-md;
   }
 
   // Show tooltip on hover
-  &:hover::after,
-  &:hover::before {
+  &:hover::after {
     opacity: 1;
   }
 

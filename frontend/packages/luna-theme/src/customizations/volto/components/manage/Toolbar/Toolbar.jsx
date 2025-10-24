@@ -40,8 +40,8 @@ import editSVG from 'luna-theme/icons/edit.svg';
 import folderSVG from 'luna-theme/icons/folder.svg';
 import addSVG from 'luna-theme/icons/add-document.svg';
 import moreSVG from 'luna-theme/icons/more.svg';
-import undoSVG from 'luna-theme/icons/undo.svg';
-import redoSVG from 'luna-theme/icons/redo.svg';
+// import undoSVG from 'luna-theme/icons/undo.svg';
+// import redoSVG from 'luna-theme/icons/redo.svg';
 import userSVG from 'luna-theme/icons/user.svg';
 import unlockSVG from '@plone/volto/icons/unlock.svg';
 import backSVG from '@plone/volto/icons/back.svg';
@@ -256,6 +256,7 @@ class Toolbar extends Component {
     // Theme toggle logic will be implemented later
   };
 
+  /* Commented out for later decision
   handleUndo = () => {
     // Undo logic will be implemented later
     console.log('Undo clicked');
@@ -265,6 +266,7 @@ class Toolbar extends Component {
     // Redo logic will be implemented later
     console.log('Redo clicked');
   };
+  */
 
   findAncestor = (el, sel) => {
     while (
@@ -306,15 +308,30 @@ class Toolbar extends Component {
         <>
           <BodyClass className="has-toolbar-luna" />
           <div className="luna-toolbar" ref={this.toolbarRef}>
-            {/* Left Section: Logo */}
+            {/* Left Section: Logo + User Button */}
             <div className="luna-toolbar-left">
               <Logo
                 pathname={this.props.pathname}
                 onToggleTheme={this.toggleTheme}
               />
+              {!this.props.hideDefaultViewButtons && (
+                <button
+                  className="luna-toolbar-button"
+                  aria-label="Account"
+                  onClick={(e) => this.toggleMenu(e, 'personalTools')}
+                  tabIndex={0}
+                  id="toolbar-personal"
+                >
+                  <Icon
+                    name={userSVG}
+                    size="24px"
+                    title="Account"
+                  />
+                </button>
+              )}
             </div>
 
-            {/* Center Section: Action Buttons */}
+            {/* Center Section: All Action Buttons */}
             <div className="luna-toolbar-center">
               {!this.props.hideDefaultViewButtons && (
                 <>
@@ -425,50 +442,43 @@ class Toolbar extends Component {
               )}
             </div>
 
-            {/* Right Section: Utility Buttons */}
-            <div className="luna-toolbar-right">
-              <button
-                className="luna-toolbar-button"
-                aria-label={this.props.intl.formatMessage(messages.undo)}
-                onClick={this.handleUndo}
-                tabIndex={0}
-              >
-                <Icon
-                  name={undoSVG}
-                  size="24px"
-                  title={this.props.intl.formatMessage(messages.undo)}
-                />
-              </button>
-
-              <button
-                className="luna-toolbar-button"
-                aria-label={this.props.intl.formatMessage(messages.redo)}
-                onClick={this.handleRedo}
-                tabIndex={0}
-              >
-                <Icon
-                  name={redoSVG}
-                  size="24px"
-                  title={this.props.intl.formatMessage(messages.redo)}
-                />
-              </button>
-
+            {/* Undo/Redo Section: White Background */}
+            {/* Commented out for later decision
+            <div className="luna-toolbar-undo-redo">
               {!this.props.hideDefaultViewButtons && (
-                <button
-                  className="luna-toolbar-button"
-                  aria-label="Account"
-                  onClick={(e) => this.toggleMenu(e, 'personalTools')}
-                  tabIndex={0}
-                  id="toolbar-personal"
-                >
-                  <Icon
-                    name={userSVG}
-                    size="24px"
-                    title="Account"
-                  />
-                </button>
-              )}
+                <>
+                  <button
+                    className="luna-toolbar-button"
+                    aria-label={this.props.intl.formatMessage(messages.undo)}
+                    onClick={this.handleUndo}
+                    tabIndex={0}
+                  >
+                    <Icon
+                      name={undoSVG}
+                      size="24px"
+                      title={this.props.intl.formatMessage(messages.undo)}
+                    />
+                  </button>
 
+                  <button
+                    className="luna-toolbar-button"
+                    aria-label={this.props.intl.formatMessage(messages.redo)}
+                    onClick={this.handleRedo}
+                    tabIndex={0}
+                  >
+                    <Icon
+                      name={redoSVG}
+                      size="24px"
+                      title={this.props.intl.formatMessage(messages.redo)}
+                    />
+                  </button>
+                </>
+              )}
+            </div>
+            */}
+
+            {/* Right Section: Empty for sidebar space */}
+            <div className="luna-toolbar-right">
               <Pluggable name="main.toolbar.bottom" />
             </div>
           </div>
