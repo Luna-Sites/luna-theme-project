@@ -17,6 +17,11 @@ body.has-toolbar-luna {
   &.has-sidebar-collapsed {
     padding-left: 20px;
   }
+
+  // Mobile responsive body padding
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    padding-top: 60px !important;
+  }
 }
 
 // Main Luna Toolbar Container
@@ -34,6 +39,12 @@ body.has-toolbar-luna {
   padding: 0 $spacing-2xl;
   box-shadow: $shadow-md;
   font-family: $font-family-base;
+
+  // Mobile responsive
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    height: 60px;
+    padding: 0 $spacing-md;
+  }
 }
 
 // Toolbar Sections
@@ -42,6 +53,10 @@ body.has-toolbar-luna {
   align-items: center;
   gap: $spacing-lg;
   flex-shrink: 0;
+
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    gap: $spacing-sm;
+  }
 }
 
 .luna-toolbar-center {
@@ -53,6 +68,16 @@ body.has-toolbar-luna {
   background: linear-gradient(to right, $white, $gray-100);
   padding: $spacing-sm;
   border-radius: $border-radius-lg;
+
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    // On mobile: spread to take available space
+    flex: 1;
+    margin-left: $spacing-md;
+    margin-right: $spacing-md;
+    gap: 4px;
+    padding: 4px;
+    justify-content: space-evenly;
+  }
 }
 
 // .luna-toolbar-undo-redo {
@@ -116,6 +141,14 @@ body.has-toolbar-luna {
   display: flex;
   align-items: center;
   gap: $spacing-md;
+
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    svg,
+    .luna-logo-icon svg {
+      width: 28px !important;
+      height: 28px !important;
+    }
+  }
 }
 
 .luna-logo-icon {
@@ -193,6 +226,17 @@ body.has-toolbar-luna.theme-dark .luna-logo-sun,
     stroke-width: 1.8;
     fill: none !important;
     transition: all $transition-fast;
+  }
+
+  // Mobile responsive - smaller buttons
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    width: 36px;
+    height: 36px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   // Tooltip on hover
@@ -329,6 +373,11 @@ body.has-toolbar-luna.theme-dark {
   .luna-toolbar-center {
     // Gradient from dark gray to semi-transparent purple (30% opacity)
     background: linear-gradient(to right, $gray-900, rgba(124, 58, 237, 0.3));
+
+    @media (max-width: $top-toolbar-mobile-breakpoint) {
+      // Keep the gradient on mobile too
+      background: linear-gradient(to right, $gray-900, rgba(124, 58, 237, 0.3));
+    }
   }
 
   .luna-toolbar-button {
