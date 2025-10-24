@@ -80,9 +80,35 @@ body.has-toolbar-luna {
   display: flex;
   align-items: center;
   transition: opacity $transition-fast;
+  position: relative;
+
+  // Tooltip on hover
+  &::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $white;
+    color: $gray-900;
+    padding: 6px 12px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-fast;
+    z-index: 10;
+    box-shadow: $shadow-md;
+  }
+
+  // Show tooltip on hover
+  &:hover::after {
+    opacity: 1;
+  }
 
   &:hover {
-    opacity: 0.8;
+    opacity: 1;
   }
 }
 
@@ -286,4 +312,3 @@ body.has-toolbar-luna.theme-dark {
     background-color: $gray-800;
   }
 }
-

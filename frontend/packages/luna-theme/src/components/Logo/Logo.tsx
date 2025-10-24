@@ -14,7 +14,7 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ onToggleTheme }) => {
   return (
-    <div className="luna-logo-wrapper" onClick={onToggleTheme} style={{ cursor: 'pointer' }}>
+    <div className="luna-logo-wrapper" onClick={onToggleTheme} style={{ cursor: 'pointer' }} aria-label="Theme">
       <div className="luna-logo">
         <Icon name={lunaLogoSVG} size="32px" className="luna-logo-icon" />
       </div>
