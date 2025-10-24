@@ -1,0 +1,314 @@
+/**
+ * Luna Theme - Horizontal Toolbar Styles
+ * Clean, modern toolbar design with white background
+ */
+
+@import 'variables';
+
+// Body adjustments for Luna toolbar
+body.has-toolbar-luna {
+  padding-top: $toolbar-height !important;
+  padding-left: 0 !important;
+
+  &.has-sidebar {
+    padding-left: 375px;
+  }
+
+  &.has-sidebar-collapsed {
+    padding-left: 20px;
+  }
+}
+
+// Main Luna Toolbar Container
+.luna-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $toolbar-height;
+  background-color: $toolbar-bg;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacing-2xl;
+  box-shadow: $shadow-md;
+  font-family: $font-family-base;
+}
+
+// Toolbar Sections
+.luna-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  flex-shrink: 0;
+}
+
+.luna-toolbar-center {
+  display: flex;
+  align-items: center;
+  gap: $toolbar-gap;
+  flex: 0 0 auto;
+  margin-left: $spacing-2xl;
+  background: linear-gradient(to right, $white, $gray-100);
+  padding: $spacing-sm;
+  border-radius: $border-radius-lg;
+}
+
+.luna-toolbar-undo-redo {
+  display: flex;
+  align-items: center;
+  gap: $toolbar-gap;
+  margin-left: $spacing-md;
+  flex-shrink: 0;
+  // White background (no gradient)
+}
+
+.luna-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: $toolbar-gap;
+  margin-left: auto;
+  flex-shrink: 0;
+  // Empty section for sidebar space
+}
+
+// Logo Component Styles
+.luna-logo-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  transition: opacity $transition-fast;
+  position: relative;
+
+  // Tooltip on hover
+  &::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $white;
+    color: $gray-900;
+    padding: 6px 12px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-fast;
+    z-index: 10;
+    box-shadow: $shadow-md;
+  }
+
+  // Show tooltip on hover
+  &:hover::after {
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.luna-logo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.luna-logo-icon {
+  color: $luna-purple;
+
+  svg {
+    stroke: $luna-purple;
+    stroke-width: 1.8;
+    fill: none !important;
+  }
+}
+
+.luna-site-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  white-space: nowrap;
+}
+
+// Toolbar Buttons
+.luna-toolbar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $toolbar-button-size;
+  height: $toolbar-button-size;
+  background-color: transparent;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+  color: $toolbar-icon-color;
+  text-decoration: none;
+  padding: 0;
+  flex-shrink: 0;
+  position: relative;
+
+  // Icon styling
+  svg {
+    width: $toolbar-icon-size;
+    height: $toolbar-icon-size;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    fill: none !important;
+    transition: all $transition-fast;
+  }
+
+  // Tooltip on hover
+  &::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $white;
+    color: $gray-900;
+    padding: 6px 12px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-fast;
+    z-index: 10;
+    box-shadow: $shadow-md;
+  }
+
+  // Show tooltip on hover
+  &:hover::after {
+    opacity: 1;
+  }
+
+  // Hover state
+  &:hover {
+    background-color: $toolbar-hover-bg;
+    color: $luna-purple;
+
+    svg {
+      stroke: $luna-purple;
+    }
+  }
+
+  // Focus state
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid $luna-purple;
+    outline-offset: 2px;
+  }
+
+  // Active/selected state (for Edit button)
+  &.active {
+    background-color: $toolbar-active-bg;
+    color: $toolbar-active-icon;
+
+    svg {
+      stroke: $toolbar-active-icon;
+    }
+
+    &:hover {
+      background-color: $luna-purple-dark;
+      color: $toolbar-active-icon;
+    }
+  }
+
+  // Disabled state
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+// Special button spacing for More button
+.luna-toolbar-center {
+  .luna-toolbar-button:last-child {
+    margin-left: $spacing-sm;
+  }
+}
+
+// Dropdown Menu Content
+.luna-toolbar-content {
+  position: fixed;
+  top: $toolbar-height;
+  left: 0;
+  right: 0;
+  background-color: $white;
+  box-shadow: $shadow-lg;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height $transition-base;
+  z-index: 2;
+
+  &.show {
+    max-height: calc(100vh - #{$toolbar-height});
+    overflow-y: auto;
+  }
+}
+
+// Pusher-puller for menu navigation
+.luna-pusher-puller {
+  display: flex;
+  transition: transform $transition-base;
+  width: 100%;
+  min-height: 200px;
+
+  > * {
+    min-width: 100%;
+    flex-shrink: 0;
+  }
+}
+
+// Hide the old toolbar and pusher
+body.has-toolbar-luna {
+  .toolbar:not(.luna-toolbar),
+  .pusher:not(.luna-pusher-puller) {
+    display: none !important;
+  }
+
+  // Ensure content doesn't overlap with toolbar
+  #main {
+    padding-top: 0;
+  }
+}
+
+// Dark theme adjustments (when implemented)
+body.has-toolbar-luna.theme-dark {
+  .luna-toolbar {
+    background-color: $gray-900;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  .luna-site-title {
+    color: $white;
+  }
+
+  .luna-toolbar-button {
+    color: $gray-300;
+
+    &:hover {
+      background-color: $gray-800;
+      color: $white;
+    }
+
+    &.active {
+      background-color: $luna-purple;
+      color: $white;
+    }
+  }
+
+  .luna-toolbar-content {
+    background-color: $gray-800;
+  }
+}

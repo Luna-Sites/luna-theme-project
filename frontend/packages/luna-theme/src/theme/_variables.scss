@@ -1,0 +1,76 @@
+/**
+ * Luna Theme - Design Variables
+ * Color palette, spacing, and design tokens
+ */
+
+// Luna Brand Colors
+$luna-purple: #7c3aed !default;
+$luna-purple-light: #a78bfa !default;
+$luna-purple-dark: #5b21b6 !default;
+
+// Neutral Colors
+$white: #ffffff !default;
+$gray-50: #f9fafb !default;
+$gray-100: #f3f4f6 !default;
+$gray-200: #e5e7eb !default;
+$gray-300: #d1d5db !default;
+$gray-400: #9ca3af !default;
+$gray-500: #6b7280 !default;
+$gray-600: #4b5563 !default;
+$gray-700: #374151 !default;
+$gray-800: #1f2937 !default;
+$gray-900: #111827 !default;
+$black: #000000 !default;
+
+// Semantic Colors
+$toolbar-bg: $white !default;
+$toolbar-icon-color: $gray-500 !default;
+$toolbar-hover-bg: $gray-100 !default;
+$toolbar-active-bg: $luna-purple !default;
+$toolbar-active-icon: $white !default;
+
+// Spacing
+$spacing-xs: 4px !default;
+$spacing-sm: 8px !default;
+$spacing-md: 12px !default;
+$spacing-lg: 16px !default;
+$spacing-xl: 40px !default;
+$spacing-2xl: 60px !default;
+
+// Toolbar Dimensions
+$toolbar-height: 75px !default;
+$toolbar-button-size: 40px !default;
+$toolbar-icon-size: 24px !default;
+$toolbar-gap: 8px !default;
+
+// Border Radius
+$border-radius-sm: 4px !default;
+$border-radius-md: 8px !default;
+$border-radius-lg: 12px !default;
+$border-radius-full: 9999px !default;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !default;
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06) !default;
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05) !default;
+
+// Typography
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+  'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif !default;
+$font-size-base: 14px !default;
+$font-size-sm: 12px !default;
+$font-size-lg: 16px !default;
+$font-weight-normal: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold: 700 !default;
+
+// Transitions
+$transition-fast: 150ms ease-in-out !default;
+$transition-base: 200ms ease-in-out !default;
+$transition-slow: 300ms ease-in-out !default;
