@@ -308,7 +308,10 @@ class Toolbar extends Component {
           <div className="luna-toolbar" ref={this.toolbarRef}>
             {/* Left Section: Logo */}
             <div className="luna-toolbar-left">
-              <Logo pathname={this.props.pathname} onToggleTheme={this.toggleTheme} />
+              <Logo
+                pathname={this.props.pathname}
+                onToggleTheme={this.toggleTheme}
+              />
             </div>
 
             {/* Center Section: Action Buttons */}
@@ -334,9 +337,7 @@ class Toolbar extends Component {
 
                   {editAction && (
                     <Link
-                      aria-label={this.props.intl.formatMessage(
-                        messages.edit,
-                      )}
+                      aria-label={this.props.intl.formatMessage(messages.edit)}
                       className="luna-toolbar-button"
                       to={`${path}/edit`}
                     >
@@ -394,9 +395,7 @@ class Toolbar extends Component {
                       this.props.content['@components']?.translations) && (
                       <button
                         className="luna-toolbar-button"
-                        aria-label={this.props.intl.formatMessage(
-                          messages.add,
-                        )}
+                        aria-label={this.props.intl.formatMessage(messages.add)}
                         onClick={(e) => this.toggleMenu(e, 'types')}
                         tabIndex={0}
                         id="toolbar-add"
