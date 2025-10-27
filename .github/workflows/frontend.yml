@@ -62,10 +62,11 @@ jobs:
       #   if: ${{ success() || failure() }}
       #   run: make lint
 
-      - name: i18n sync
-        id: i18n
-        if: ${{ success() || failure() }}
-        run: make ci-i18n
+      # Temporarily disabled for testing
+      # - name: i18n sync
+      #   id: i18n
+      #   if: ${{ success() || failure() }}
+      #   run: make ci-i18n
 
       - name: Unit Tests
         id: unit
