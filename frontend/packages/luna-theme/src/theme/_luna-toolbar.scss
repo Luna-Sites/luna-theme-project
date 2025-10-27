@@ -22,6 +22,11 @@ body.has-toolbar-luna {
   @media (max-width: $top-toolbar-mobile-breakpoint) {
     padding-top: 60px !important;
   }
+
+  // Hide the default hamburger menu (we have our own toolbar)
+  .hamburger-wrapper {
+    display: none !important;
+  }
 }
 
 // Main Luna Toolbar Container
