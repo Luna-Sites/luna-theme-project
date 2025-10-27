@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Luna Theme - Save icon (Purple) -->
-<svg width="24" height="24" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    
     <title>save-floppy</title>
-    <g fill="#7c3aed">
-        <path d="M19,10 C19.552,10 20,9.553 20,9 L20,5 C20,4.447 19.552,4 19,4 C18.448,4 18,4.447 18,5 L18,9 C18,9.553 18.448,10 19,10 L19,10 Z M30,28 C30,29.104 29.104,30 28,30 L4,30 C2.896,30 2,29.104 2,28 L2,4 C2,2.896 2.896,2 4,2 L6,2 L6,12 C6,13.104 6.896,14 8,14 L24,14 C25.104,14 26,13.104 26,12 L26,2 L28,2 C29.104,2 30,2.896 30,4 L30,28 L30,28 Z M8,2 L24,2 L24,11 C24,11.553 23.552,12 23,12 L9,12 C8.448,12 8,11.553 8,11 L8,2 L8,2 Z M28,0 L4,0 C1.791,0 0,1.791 0,4 L0,28 C0,30.209 1.791,32 4,32 L28,32 C30.209,32 32,30.209 32,28 L32,4 C32,1.791 30.209,0 28,0 L28,0 Z"></path>
+    <desc>Created with Sketch Beta.</desc>
+    <defs>
+
+</defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-154.000000, -517.000000)" fill="#7c3aed">
+            <path d="M172,522 C172,521.447 172.448,521 173,521 C173.552,521 174,521.447 174,522 L174,526 C174,526.553 173.552,527 173,527 C172.448,527 172,526.553 172,526 L172,522 L172,522 Z M163,529 L177,529 C177.552,529 178,528.553 178,528 L178,517 L162,517 L162,528 C162,528.553 162.448,529 163,529 L163,529 Z M182,517 L180,517 L180,529 C180,530.104 179.104,531 178,531 L162,531 C160.896,531 160,530.104 160,529 L160,517 L158,517 C155.791,517 154,518.791 154,521 L154,545 C154,547.209 155.791,549 158,549 L182,549 C184.209,549 186,547.209 186,545 L186,521 C186,518.791 184.209,517 182,517 L182,517 Z" id="save-floppy" sketch:type="MSShapeGroup">
+
+</path>
+        </g>
     </g>
 </svg>

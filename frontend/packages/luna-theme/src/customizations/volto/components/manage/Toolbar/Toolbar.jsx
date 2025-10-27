@@ -138,6 +138,7 @@ class Toolbar extends Component {
     unlockRequest: PropTypes.objectOf(PropTypes.any),
     inner: PropTypes.element,
     hideDefaultViewButtons: PropTypes.bool,
+    hideCenterToolbar: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -146,6 +147,7 @@ class Toolbar extends Component {
     userId: null,
     content: null,
     hideDefaultViewButtons: false,
+    hideCenterToolbar: false,
     types: [],
   };
 
@@ -320,7 +322,9 @@ class Toolbar extends Component {
                 <div className="luna-toolbar-left">{this.props.inner}</div>
 
                 {/* Center Section: Undo/Redo (portaled from LunaUndoToolbar) */}
-                <div className="luna-toolbar-center"></div>
+                {!this.props.hideCenterToolbar && (
+                  <div className="luna-toolbar-center"></div>
+                )}
 
                 {/* Right Section: Empty for sidebar space */}
                 <div className="luna-toolbar-right"></div>
