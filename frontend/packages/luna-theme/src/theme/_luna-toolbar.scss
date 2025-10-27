@@ -419,6 +419,11 @@ body.has-toolbar-luna.theme-dark .luna-logo-sun,
   box-shadow: $shadow-lg;
   z-index: 1000;
   border-radius: $border-radius-md;
+  display: none; // Hidden by default
+
+  &.show {
+    display: block; // Show when .show class is added
+  }
 
   .pastanaga-menu {
     padding: $spacing-lg;
