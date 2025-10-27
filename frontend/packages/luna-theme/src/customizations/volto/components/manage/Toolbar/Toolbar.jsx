@@ -295,15 +295,17 @@ class Toolbar extends Component {
     return (
       this.props.token && (
         <>
-          <BodyClass className={cx('has-toolbar-luna', { 'theme-dark': this.state.isDarkTheme })} />
+          <BodyClass
+            className={cx('has-toolbar-luna', {
+              'theme-dark': this.state.isDarkTheme,
+            })}
+          />
           <div className="luna-toolbar" ref={this.toolbarRef}>
             {/* Edit Mode Layout: Save/Cancel | Undo/Redo | Empty */}
             {isEditMode ? (
               <>
                 {/* Left Section: Save and Cancel buttons */}
-                <div className="luna-toolbar-left">
-                  {this.props.inner}
-                </div>
+                <div className="luna-toolbar-left">{this.props.inner}</div>
 
                 {/* Center Section: Undo/Redo (portaled from LunaUndoToolbar) */}
                 <div className="luna-toolbar-center"></div>
@@ -327,11 +329,7 @@ class Toolbar extends Component {
                     tabIndex={0}
                     id="toolbar-personal"
                   >
-                    <Icon
-                      name={userSVG}
-                      size="24px"
-                      title="Account"
-                    />
+                    <Icon name={userSVG} size="24px" title="Account" />
                   </button>
                 </div>
 
@@ -453,11 +451,11 @@ class Toolbar extends Component {
           {/* Dropdown Menu Content */}
           <div
             style={this.state.menuStyle}
-            className={
-              this.state.showMenu
-                ? 'luna-toolbar-content show'
-                : 'luna-toolbar-content'
-            }
+            // className={
+            //   this.state.showMenu
+            //     ? 'luna-toolbar-content show'
+            //     : 'luna-toolbar-content'
+            // }
             ref={this.toolbarWindow}
           >
             {this.state.showMenu && (
