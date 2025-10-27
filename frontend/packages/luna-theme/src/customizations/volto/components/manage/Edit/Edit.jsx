@@ -433,6 +433,11 @@ class Edit extends Component {
             <Toolbar
               pathname={this.props.pathname}
               hideDefaultViewButtons
+              hideCenterToolbar={
+                this.props.content?.['@type'] === 'File' ||
+                this.props.content?.['@type'] === 'Image' ||
+                this.props.content?.['@type'] === 'Link'
+              }
               inner={
                 <>
                   <button

@@ -138,6 +138,7 @@ class Toolbar extends Component {
     unlockRequest: PropTypes.objectOf(PropTypes.any),
     inner: PropTypes.element,
     hideDefaultViewButtons: PropTypes.bool,
+    hideCenterToolbar: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -146,6 +147,7 @@ class Toolbar extends Component {
     userId: null,
     content: null,
     hideDefaultViewButtons: false,
+    hideCenterToolbar: false,
     types: [],
   };
 
@@ -241,9 +243,21 @@ class Toolbar extends Component {
       this.closeMenu();
       return;
     }
+
+    // Get the button position to center the dropdown below it
+    const button = e.currentTarget;
+    const buttonRect = button.getBoundingClientRect();
+    const menuWidth = 300; // Width of dropdown menu
+    const leftPosition = buttonRect.left + buttonRect.width / 2 - menuWidth / 2;
+
     this.setState((state) => ({
       showMenu: !state.showMenu,
-      menuStyle: { top: '100%', left: 0, right: 0 },
+      menuStyle: {
+        top: this.toolbarRef.current.offsetHeight + 'px',
+        left: leftPosition + 'px',
+        width: menuWidth + 'px',
+        right: 'auto',
+      },
     }));
     this.toggleButtonPressed(e);
     this.loadComponent(selector);
@@ -295,18 +309,22 @@ class Toolbar extends Component {
     return (
       this.props.token && (
         <>
-          <BodyClass className={cx('has-toolbar-luna', { 'theme-dark': this.state.isDarkTheme })} />
+          <BodyClass
+            className={cx('has-toolbar-luna', {
+              'theme-dark': this.state.isDarkTheme,
+            })}
+          />
           <div className="luna-toolbar" ref={this.toolbarRef}>
             {/* Edit Mode Layout: Save/Cancel | Undo/Redo | Empty */}
             {isEditMode ? (
               <>
                 {/* Left Section: Save and Cancel buttons */}
-                <div className="luna-toolbar-left">
-                  {this.props.inner}
-                </div>
+                <div className="luna-toolbar-left">{this.props.inner}</div>
 
                 {/* Center Section: Undo/Redo (portaled from LunaUndoToolbar) */}
-                <div className="luna-toolbar-center"></div>
+                {!this.props.hideCenterToolbar && (
+                  <div className="luna-toolbar-center"></div>
+                )}
 
                 {/* Right Section: Empty for sidebar space */}
                 <div className="luna-toolbar-right"></div>
@@ -327,11 +345,7 @@ class Toolbar extends Component {
                     tabIndex={0}
                     id="toolbar-personal"
                   >
-                    <Icon
-                      name={userSVG}
-                      size="24px"
-                      title="Account"
-                    />
+                    <Icon name={userSVG} size="24px" title="Account" />
                   </button>
                 </div>
 
