@@ -7,8 +7,7 @@ import Icon from '@plone/volto/components/theme/Icon/Icon';
 import Toast from '@plone/volto/components/manage/Toast/Toast';
 import { Field, BlocksForm } from '@plone/volto/components/manage/Form';
 import BlocksToolbar from '@plone/volto/components/manage/Form/BlocksToolbar';
-// Luna Theme: UndoToolbar removed - Undo/Redo buttons moved to horizontal toolbar
-// import UndoToolbar from '@plone/volto/components/manage/Form/UndoToolbar';
+import LunaUndoToolbar from 'luna-theme/components/UndoToolbar';
 import { difference } from '@plone/volto/helpers/Utils/Utils';
 import FormValidation from '@plone/volto/helpers/FormValidation/FormValidation';
 import {
@@ -777,8 +776,8 @@ class Form extends Component {
                 }
                 onSelectBlock={this.onSelectBlock}
               />
-              {/* Luna Theme: UndoToolbar removed - Undo/Redo buttons moved to horizontal toolbar */}
-              {/* <UndoToolbar
+              {/* Luna Theme: Custom UndoToolbar with Luna styling */}
+              <LunaUndoToolbar
                 state={{
                   formData,
                   selected: this.props.uiState.selected,
@@ -791,7 +790,7 @@ class Form extends Component {
                   }
                   return this.setState(state);
                 }}
-              /> */}
+              />
               <BlocksForm
                 onChangeFormData={(newData) => {
                   const newFormData = {

@@ -42,9 +42,9 @@ import { hasBlocksData } from '@plone/volto/helpers/Blocks/Blocks';
 import { preloadLazyLibs } from '@plone/volto/helpers/Loadable';
 import { tryParseJSON } from '@plone/volto/helpers/FormValidation/FormValidation';
 
-// Using Volto default icons - TODO: replace with Luna theme icons
-import saveSVG from '@plone/volto/icons/save.svg';
-import clearSVG from '@plone/volto/icons/clear.svg';
+// Luna Theme custom icons
+import saveSVG from 'luna-theme/icons/save.svg';
+import cancelSVG from 'luna-theme/icons/cancel.svg';
 
 import config from '@plone/volto/registry';
 
@@ -437,7 +437,7 @@ class Edit extends Component {
                 <>
                   <button
                     id="toolbar-save"
-                    className="luna-toolbar-button luna-save-button"
+                    className="luna-edit-button luna-save-button"
                     aria-label={this.props.intl.formatMessage(messages.save)}
                     onClick={() => this.form.current.onSubmit()}
                     disabled={this.props.updateRequest.loading}
@@ -448,25 +448,19 @@ class Edit extends Component {
                       size="24px"
                       title={this.props.intl.formatMessage(messages.save)}
                     />
-                    <span className="button-label">
-                      {this.props.intl.formatMessage(messages.save)}
-                    </span>
                   </button>
                   <button
                     type="button"
-                    className="luna-toolbar-button luna-cancel-button"
+                    className="luna-edit-button luna-cancel-button"
                     aria-label={this.props.intl.formatMessage(messages.cancel)}
                     onClick={() => this.onCancel()}
                     tabIndex={0}
                   >
                     <Icon
-                      name={clearSVG}
-                      size="24px"
+                      name={cancelSVG}
+                      size="26px"
                       title={this.props.intl.formatMessage(messages.cancel)}
                     />
-                    <span className="button-label">
-                      {this.props.intl.formatMessage(messages.cancel)}
-                    </span>
                   </button>
 
                   {config.settings.isMultilingual && (

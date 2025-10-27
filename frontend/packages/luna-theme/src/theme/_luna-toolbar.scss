@@ -51,7 +51,7 @@ body.has-toolbar-luna {
 .luna-toolbar-left {
   display: flex;
   align-items: center;
-  gap: $spacing-lg;
+  gap: $spacing-md;
   flex-shrink: 0;
 
   @media (max-width: $top-toolbar-mobile-breakpoint) {
@@ -311,6 +311,99 @@ body.has-toolbar-luna.theme-dark .luna-logo-sun,
 .luna-toolbar-center {
   .luna-toolbar-button:last-child {
     margin-left: $spacing-sm;
+  }
+}
+
+// Edit Mode Buttons (Save/Cancel) - Preserve SVG fill colors
+.luna-edit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $toolbar-button-size;
+  height: $toolbar-button-size;
+  background-color: transparent;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+  text-decoration: none;
+  padding: 0;
+  flex-shrink: 0;
+  position: relative;
+
+  // IMPORTANT: Allow SVG fill colors (don't override with stroke)
+  svg {
+    width: $toolbar-icon-size;
+    height: $toolbar-icon-size;
+    // No stroke or fill overrides - let the SVG colors show through
+    transition: all $transition-fast;
+  }
+
+  // Mobile responsive - smaller buttons
+  @media (max-width: $top-toolbar-mobile-breakpoint) {
+    width: 36px;
+    height: 36px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // Tooltip on hover
+  &::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $white;
+    color: $gray-900;
+    padding: 6px 12px;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-fast;
+    z-index: 10;
+    box-shadow: $shadow-md;
+  }
+
+  // Show tooltip on hover
+  &:hover::after {
+    opacity: 1;
+  }
+
+  // Hover state - lighten background
+  &:hover {
+    background-color: $toolbar-hover-bg;
+  }
+
+  // Focus state
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid $luna-purple;
+    outline-offset: 2px;
+  }
+
+  // Disabled state
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+// Cancel button - ensure red color
+.luna-cancel-button {
+  svg {
+    stroke: #ef4444 !important;
+    stroke-width: 2.2;
+    fill: none !important;
   }
 }
 
