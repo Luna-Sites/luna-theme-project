@@ -41,8 +41,11 @@ import folderSVG from 'luna-theme/icons/folder.svg';
 import addSVG from 'luna-theme/icons/add-document.svg';
 import moreSVG from 'luna-theme/icons/more.svg';
 import userSVG from 'luna-theme/icons/user.svg';
+import showSVG from 'luna-theme/icons/show-svgrepo-com.svg';
+import hideSVG from 'luna-theme/icons/hide-svgrepo-com.svg';
 import unlockSVG from '@plone/volto/icons/unlock.svg';
 import backSVG from '@plone/volto/icons/back.svg';
+import { toggleSidebarVisibility } from 'luna-theme/actions/sidebar';
 
 const messages = defineMessages({
   edit: {
@@ -84,6 +87,14 @@ const messages = defineMessages({
   unlock: {
     id: 'Unlock',
     defaultMessage: 'Unlock',
+  },
+  showSidebar: {
+    id: 'Show sidebar',
+    defaultMessage: 'Show sidebar',
+  },
+  hideSidebar: {
+    id: 'Hide sidebar',
+    defaultMessage: 'Hide sidebar',
   },
 });
 
@@ -292,6 +303,10 @@ class Toolbar extends Component {
     this.props.unlockContent(getBaseUrl(this.props.pathname), true);
   };
 
+  toggleSidebar = () => {
+    this.props.toggleSidebarVisibility();
+  };
+
   render() {
     const path = getBaseUrl(this.props.pathname);
     const lock = this.props.content?.lock;
@@ -305,6 +320,9 @@ class Toolbar extends Component {
 
     // Detect if we're in Edit mode
     const isEditMode = this.props.hideDefaultViewButtons && this.props.inner;
+
+    // Get sidebar visibility from Redux
+    const sidebarVisible = this.props.sidebarVisibility?.visible ?? true;
 
     return (
       this.props.token && (
@@ -326,8 +344,34 @@ class Toolbar extends Component {
                   <div className="luna-toolbar-center"></div>
                 )}
 
+                {/* Sidebar Toggle Button - positioned in center-right area */}
+                <button
+                  className="luna-toolbar-button"
+                  aria-label={this.props.intl.formatMessage(
+                    sidebarVisible
+                      ? messages.hideSidebar
+                      : messages.showSidebar,
+                  )}
+                  onClick={this.toggleSidebar}
+                  tabIndex={0}
+                  id="toolbar-toggle-sidebar"
+                  style={{ marginLeft: '20px' }}
+                >
+                  <Icon
+                    name={sidebarVisible ? hideSVG : showSVG}
+                    size="24px"
+                    title={this.props.intl.formatMessage(
+                      sidebarVisible
+                        ? messages.hideSidebar
+                        : messages.showSidebar,
+                    )}
+                  />
+                </button>
+
                 {/* Right Section: Empty for sidebar space */}
-                <div className="luna-toolbar-right"></div>
+                <div className="luna-toolbar-right">
+                  <Pluggable name="main.toolbar.bottom" />
+                </div>
               </>
             ) : (
               <>
@@ -568,7 +612,14 @@ export default compose(
       pathname: props.pathname,
       types: filter(state.types.types, 'addable'),
       unlockRequest: state.content.unlock,
+      sidebarVisibility: state.sidebarVisibility,
     }),
-    { getTypes, listActions, setExpandedToolbar, unlockContent },
+    {
+      getTypes,
+      listActions,
+      setExpandedToolbar,
+      unlockContent,
+      toggleSidebarVisibility,
+    },
   ),
 )(Toolbar);

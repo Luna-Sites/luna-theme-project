@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useCallback } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tab } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,6 @@ import { getCookieOptions } from '@plone/volto/helpers/Cookies/cookies';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
 import forbiddenSVG from '@plone/volto/icons/forbidden.svg';
 import { setSidebarTab } from '@plone/volto/actions/sidebar/sidebar';
-// Luna Theme custom icon
-import hideSVG from 'luna-theme/icons/hide-svgrepo-com.svg';
 
 const messages = defineMessages({
   document: {
@@ -56,47 +54,33 @@ const Sidebar = (props) => {
     cookies.get('sidebar_expanded') !== 'false',
   );
   const [size] = useState(0);
-  const [showFull, setshowFull] = useState(true);
 
   const tab = useSelector((state) => state.sidebar.tab);
-  const toolbarExpanded = useSelector((state) => state.toolbar.expanded);
   const type = useSelector((state) => state.schema?.schema?.title);
+  const sidebarVisible = useSelector(
+    (state) => state.sidebarVisibility.visible,
+  );
 
   const onToggleExpanded = () => {
     cookies.set('sidebar_expanded', !expanded, getCookieOptions());
     setExpanded(!expanded);
-    resetFullSizeSidebar();
   };
 
-  const resetFullSizeSidebar = useCallback(() => {
-    if (!expanded) {
-      const currentResizer = document.querySelector('#sidebar');
-      const sidebarContainer =
-        currentResizer.getElementsByClassName('sidebar-container')[0];
-      sidebarContainer.classList.remove('full-size');
-      sidebarContainer.classList.remove('no-toolbar');
-      setshowFull(true);
-    }
-  }, [expanded]);
+  // Control sidebar visibility based on Redux state
+  useEffect(() => {
+    const sidebar = document.querySelector('#sidebar');
+    if (!sidebar) return;
 
-  const onToggleFullSize = useCallback(() => {
-    const currentResizer = document.querySelector('#sidebar');
-    const sidebarContainer =
-      currentResizer.getElementsByClassName('sidebar-container')[0];
-
-    if (showFull) {
-      sidebarContainer.classList.add('full-size');
-      if (!toolbarExpanded) {
-        sidebarContainer.classList.add('no-toolbar');
-      } else {
-        sidebarContainer.classList.remove('no-toolbar');
-      }
+    if (sidebarVisible) {
+      sidebar.style.display = '';
+      document.body.classList.add('has-sidebar');
+      document.body.classList.remove('has-sidebar-collapsed');
     } else {
-      sidebarContainer.classList.remove('full-size');
-      sidebarContainer.classList.remove('no-toolbar');
+      sidebar.style.display = 'none';
+      document.body.classList.remove('has-sidebar');
+      document.body.classList.add('has-sidebar-collapsed');
     }
-    setshowFull(!showFull);
-  }, [showFull, toolbarExpanded]);
+  }, [sidebarVisible]);
 
   const onTabChange = (event, data) => {
     event.nativeEvent.stopImmediatePropagation();
@@ -126,24 +110,6 @@ const Sidebar = (props) => {
           }
           onClick={onToggleExpanded}
         />
-        <Button
-          type="button"
-          className="full-size-sidenav-btn"
-          onClick={onToggleFullSize}
-          aria-label="full-screen-sidenav"
-          style={{ padding: '8px' }}
-        >
-          <Icon
-            name={hideSVG}
-            size="20px"
-            style={{
-              color: '#6b7280',
-              width: '24px',
-              height: '24px',
-              padding: '10px',
-            }}
-          />
-        </Button>
         <Tab
           menu={{
             secondary: true,
