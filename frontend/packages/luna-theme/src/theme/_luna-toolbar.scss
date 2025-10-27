@@ -413,24 +413,50 @@ body.has-toolbar-luna.theme-dark .luna-logo-sun,
 }
 
 // Dropdown Menu Content
-// TODO: Customize later - for now using Volto defaults
-// .luna-toolbar-content {
-//   position: fixed;
-//   top: $toolbar-height;
-//   left: 0;
-//   right: 0;
-//   background-color: $white;
-//   box-shadow: $shadow-lg;
-//   max-height: 0;
-//   overflow: hidden;
-//   transition: max-height $transition-base;
-//   z-index: 2;
-//
-//   &.show {
-//     max-height: calc(100vh - #{$toolbar-height});
-//     overflow-y: auto;
-//   }
-// }
+.luna-toolbar-content {
+  position: fixed;
+  background-color: $white;
+  box-shadow: $shadow-lg;
+  z-index: 1000;
+  border-radius: $border-radius-md;
+
+  .pastanaga-menu {
+    padding: $spacing-lg;
+
+    header {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $gray-700;
+      margin-bottom: $spacing-md;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid $gray-200;
+    }
+
+    .pastanaga-menu-list {
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          a {
+            display: block;
+            padding: $spacing-sm $spacing-md;
+            color: $gray-900;
+            text-decoration: none;
+            border-radius: $border-radius-sm;
+            transition: all $transition-fast;
+
+            &:hover {
+              background-color: $gray-100;
+              color: $luna-purple;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 // Pusher-puller for menu navigation
 .luna-pusher-puller {

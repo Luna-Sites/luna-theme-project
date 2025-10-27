@@ -241,9 +241,21 @@ class Toolbar extends Component {
       this.closeMenu();
       return;
     }
+
+    // Get the button position to center the dropdown below it
+    const button = e.currentTarget;
+    const buttonRect = button.getBoundingClientRect();
+    const menuWidth = 300; // Width of dropdown menu
+    const leftPosition = buttonRect.left + buttonRect.width / 2 - menuWidth / 2;
+
     this.setState((state) => ({
       showMenu: !state.showMenu,
-      menuStyle: { top: '100%', left: 0, right: 0 },
+      menuStyle: {
+        top: this.toolbarRef.current.offsetHeight + 'px',
+        left: leftPosition + 'px',
+        width: menuWidth + 'px',
+        right: 'auto',
+      },
     }));
     this.toggleButtonPressed(e);
     this.loadComponent(selector);
@@ -451,11 +463,11 @@ class Toolbar extends Component {
           {/* Dropdown Menu Content */}
           <div
             style={this.state.menuStyle}
-            // className={
-            //   this.state.showMenu
-            //     ? 'luna-toolbar-content show'
-            //     : 'luna-toolbar-content'
-            // }
+            className={
+              this.state.showMenu
+                ? 'luna-toolbar-content show'
+                : 'luna-toolbar-content'
+            }
             ref={this.toolbarWindow}
           >
             {this.state.showMenu && (
