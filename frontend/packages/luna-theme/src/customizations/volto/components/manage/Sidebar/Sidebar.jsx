@@ -1,13 +1,11 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tab } from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { compose } from 'redux';
 import { withCookies } from 'react-cookie';
 import { defineMessages, useIntl } from 'react-intl';
-import cx from 'classnames';
 import BodyClass from '@plone/volto/helpers/BodyClass/BodyClass';
-import { getCookieOptions } from '@plone/volto/helpers/Cookies/cookies';
 import Icon from '@plone/volto/components/theme/Icon/Icon';
 import forbiddenSVG from '@plone/volto/icons/forbidden.svg';
 import { setSidebarTab } from '@plone/volto/actions/sidebar/sidebar';
@@ -25,14 +23,6 @@ const messages = defineMessages({
     id: 'Settings',
     defaultMessage: 'Settings',
   },
-  shrinkSidebar: {
-    id: 'Shrink sidebar',
-    defaultMessage: 'Shrink sidebar',
-  },
-  expandSidebar: {
-    id: 'Expand sidebar',
-    defaultMessage: 'Expand sidebar',
-  },
   order: {
     id: 'Order',
     defaultMessage: 'Order',
@@ -42,17 +32,7 @@ const messages = defineMessages({
 const Sidebar = (props) => {
   const dispatch = useDispatch();
   const intl = useIntl();
-  const {
-    cookies,
-    content,
-    documentTab,
-    blockTab,
-    settingsTab,
-    orderTab = true,
-  } = props;
-  const [expanded, setExpanded] = useState(
-    cookies.get('sidebar_expanded') !== 'false',
-  );
+  const { documentTab, blockTab, settingsTab, orderTab = true } = props;
   const [size] = useState(0);
 
   const tab = useSelector((state) => state.sidebar.tab);
@@ -60,11 +40,6 @@ const Sidebar = (props) => {
   const sidebarVisible = useSelector(
     (state) => state.sidebarVisibility.visible,
   );
-
-  const onToggleExpanded = () => {
-    cookies.set('sidebar_expanded', !expanded, getCookieOptions());
-    setExpanded(!expanded);
-  };
 
   // Control sidebar visibility based on Redux state
   useEffect(() => {
@@ -89,27 +64,11 @@ const Sidebar = (props) => {
 
   return (
     <Fragment>
-      <BodyClass
-        className={expanded ? 'has-sidebar' : 'has-sidebar-collapsed'}
-      />
+      <BodyClass className="has-sidebar" />
       <div
-        className={cx('sidebar-container', { collapsed: !expanded })}
+        className="sidebar-container"
         style={size > 0 ? { width: size } : null}
       >
-        <Button
-          type="button"
-          aria-label={
-            expanded
-              ? intl.formatMessage(messages.shrinkSidebar)
-              : intl.formatMessage(messages.expandSidebar)
-          }
-          className={
-            content && content.review_state
-              ? `${content.review_state} trigger`
-              : 'trigger'
-          }
-          onClick={onToggleExpanded}
-        />
         <Tab
           menu={{
             secondary: true,
@@ -194,7 +153,7 @@ const Sidebar = (props) => {
           ].filter((tab) => tab)}
         />
       </div>
-      <div className={expanded ? 'pusher expanded' : 'pusher'} />
+      <div className="pusher" />
     </Fragment>
   );
 };
